@@ -10,7 +10,7 @@ Python 编程规范主要为了方便实验代码的阅读和管理，同时便�
 
 * [Google Python风格指南](https://zh-google-styleguide.readthedocs.io/en/latest/)
 
-## 编程规范
+## 编程风格及规范
 
 ### 导入
 
@@ -78,20 +78,7 @@ Python 编程规范主要为了方便实验代码的阅读和管理，同时便�
 * 对于简单情况，每个部分应该单独置于一行: 映射表达式, for语句, 过滤器表达式。
 
   ```python
-  Yes:
-    result = []
-    for x in range(10):
-        for y in range(5):
-            if x * y > 10:
-                result.append((x, y))
-  
-    for x in xrange(5):
-        for y in xrange(5):
-            if x != y:
-                for z in xrange(5):
-                    if y != z:
-                        yield (x, y, z)
-  
+  Yes:  
     return ((x, complicated_transform(x))
             for x in long_generator_function(parameter)
             if x is not None)
@@ -156,7 +143,7 @@ Lambda在一个表达式中定义匿名函数，与语句相反。常用于为 `
 
 ### 默认参数值
 
-在函数参数列表的最后指定变量的值，例如 `def foo(a, b = 0):` 。如果调用foo时只带一个参数, 则b被设为0. 如果带两个参数, 则b的值等于第二个参数。
+在函数参数列表的最后指定变量的值，例如 `def foo(a, b=0):` 。如果调用foo时只带一个参数, 则b被设为0. 如果带两个参数, 则b的值等于第二个参数。
 
 默认参数值提供了一种简单的方法覆盖使用大量默认值函数的默认值, python不支持重载方法和函数，默认参数是一种“伪造”重载行为的简单方式。但是默认参数只在模块加载时求值一次，如果参数是列表或字典之类的可变类型, 这可能会导致问题；如果函数修改了对象(例如向列表追加项), 默认值将被修改。
 
@@ -184,9 +171,9 @@ No:  def foo(a, b=FLAGS.my_thing):  # sys.argv has not yet been parsed...
 
 
 
-### True/False（详细）
+### True/False
 
-Python布尔值的条件语句更易读且不易犯错，大部分情况下速度更快。Python在布尔上下文中会将某些值求值为False。例如，所有的”空”值0，None，[]，{}都被认为是False。
+Python布尔值的条件语句更易读且不易犯错，大部分情况下**速度更快**。Python在布尔上下文中会将某些值求值为False。例如，所有的”空”值0，None，[]，{}都被认为是False。
 
 **Recommended**
 
@@ -227,7 +214,7 @@ No:  if len(users) == 0:
 
 
 
-### 空格（详细）
+### 空格
 
 按照标准的排版规范来使用空格。
 
@@ -291,31 +278,45 @@ No:  if len(users) == 0:
        foo = 1000  # comment
        long_name = 2  # comment that should not be aligned
   
-       dictionary = {
-           "foo": 1,
-           "long_name": 2,
-           }
-  
   No:
        foo       = 1000  # comment
        long_name = 2     # comment that should not be aligned
-  
-       dictionary = {
-           "foo"      : 1,
-           "long_name": 2,
-           }
   ```
 
-  
+### 换行
+
+### 命名
+
 
 ## 注释规范
 
+### 块注释
+
+### 行注释
+
+### docstrings
+
+### TODO
+
 ## 编程建议
 
-### TODO注释
+### __future__模块
+
+### isinstance
+
+### 文件读取
+
+## 编程助手
+
+### Jupyter Notebook
+
+### Pycharm
 
 ### pdb调试
 
+## 服务器
+
 ## 修订记录
 
-* 2020年7月27日，由王雪(名字）创建了文档（完成了什么文档操作）
+* 2020年7月27日，由王雪创建了文档
+* 2020年8月2日，由周倍同重新修改和添加了部分目录结构
