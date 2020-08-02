@@ -9,6 +9,7 @@ Python 编程规范主要为了方便实验代码的阅读和管理，同时便�
 ### 参考资料
 
 * [Google Python风格指南](https://zh-google-styleguide.readthedocs.io/en/latest/)
+* [jupyter notebook可以做什么](https://www.zhihu.com/question/46309360/answer/254638807)
 
 ## 编程风格及规范
 
@@ -302,15 +303,74 @@ No:  if len(users) == 0:
 
 ### __future__模块
 
+python在新版本中引入的功能有时候是不兼容旧版本的，通过__future__模块，python2可以调用python3的某些功能，例如print函数，__future__模块可以使得python2.x和python3.x有更好的兼容性。但是现在由于python2.x不再维护，因此建议使用python3.6，如果存在部分开源代码使用python2.x的情况，可以通过__future__模块更方便的融入到自己的工程中。
+
 ### isinstance
 
+python的内置函数，用于判断对象的类型是否和已知类型相同时，推荐使用isinstance函数而不是type函数，isinstance会认为子类是一种父类型，考虑继承关系，而type不会认为子类是一种父类型，不考虑继承关系。
+
+```python
+class A:
+	pass
+	
+class B(A):
+	pass
+	
+isinstance(A(), A) # returns True
+type(A()) == A # returns True
+isinstance(B(), A) # returns True，考虑继承关系
+type(B()) == A # returns False，不考虑继承关系
+```
+
 ### 文件读取
+
+文件读取是python的基本IO操作，一般通过open获取文件句柄然后读取文件，但是当文件读取出错时获取具柄异常，文件将无法关闭，特别是在我们读取大文件的时候文件无法关闭意味着占用的内存无法得到释放，只能重新启动程序或者手动处理。因此我们建议通过with open实现文件读取，with open的好处就是程序到达语句末尾的时候即使出现异常也会自动关闭文件。
+
+**Not Recommended**
+
+```python
+f = open("file.txt", "r")
+content = f.readlines()
+f.close()
+```
+
+**Recommended**
+
+```python
+with open("file.txt", "r") as f:
+	content = f.readlines()
+```
 
 ## 编程助手
 
 ### Jupyter Notebook
 
+> Jupyter notebook（http://jupyter.org/） 是一种 Web 应用，能让用户将说明文本、数学方程、代码和可视化内容全部组合到一个易于共享的文档中。
+
+Jupyter notebook支持的功能：
+
+* 交互式调试
+* Markdown
+* 多语言
+* 命令行
+* 主题切换
+* 丰富的插件
+* ......
+
+jupyter notebook中一个非常重要的概念就是cell，每个cell能够单独进行运算，这样适合于代码调试。我们开发一个完整的脚本时变量会随着代码执行的结束而从内存中释放，如果我们想看中间的变量或者结构，我们只能通过断点或者输出日志信息的方式进行调试，这样无疑是非常繁琐的，如果一个程序运行很多这种方式还可行，如果运行时间长达几个小时，这样我们调试一圈耗费的时间就太长了。
+
+而在jupyter notebook中我们可以把代码分隔到不同的cell里逐个进行调试，这样它会持续化变量的值，我们可以交互式的在不同cell里获取到我们想要测试的变量值和类型。在机器学习或者深度学习的研究项目中，我们需要快速的试错和尝试不同的方法，jupyter notebook就成为了一个非常好的工具，可以帮助我们可视化分析数据和结果，配合交互式的功能也可以充当PPT的角色用于做成果展示。
+
+Jupyter notebook部分有用的功能：
+
+* [魔术函数](https://www.sohu.com/a/388381278_114774)
+* [操作快捷键](https://www.jianshu.com/p/72493e81a708)
+* [实用扩展插件](https://zhuanlan.zhihu.com/p/97394628)
+* [基于matplotlib的可交互图表seaborn](https://seaborn.pydata.org/introduction.html)
+
 ### Pycharm
+
+### Colab
 
 ### pdb调试
 
