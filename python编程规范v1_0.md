@@ -271,8 +271,31 @@ No:  if len(users) == 0:
   ```
 
 ### 换行
+除了长的导入模块语句or注释里的URL，每行不超过80个字符。
+* 不要使用反斜杠连接行，Python会将圆括号，中括号和花括号中的行隐式的连接起来。如需要，可在表达式外围增加一对额外的圆括号
+  ```python
+  Yes: foo_bar(self, width, height, color='black', design=None, x='foo',
+             emphasis=None, highlight=0)
 
-
+       if (width == 0 and height == 0 and
+           color == 'red' and emphasis == 'strong'):
+  ```
+* 如果一个文本字符串在一行放不下, 可以使用圆括号来实现隐式行连接
+  ```python
+  Yes: x = ('This will build a very long long '
+            'long long long long long long string')
+  ```
+* 注释中，将长的URL放在一行上
+ ```python
+ Yes:  # See details at
+       # http://www.example.com/us/developer/documentation/api/content/v2.0/csv_file_name_extension_full_specification.html
+  ```
+* 注释中，URL不建议换行，应放在一行上
+  ```python
+  Yes:  # See details at
+        # http://www.example.com/us/developer/documentation/api/content/\\
+       v2.0/csv_file_name_extension_full_specification.html
+  ```
 
 ### 命名
 **命名约定**
@@ -283,7 +306,24 @@ No:  if len(users) == 0:
 5. 对类名使用大写字母开头的单词(如CapWords)，模块名使用小写加下划线的方式(如lower_with_under.py)；有很多现存的模块使用类似于CapWords.py这样的命名, 但现在已经不鼓励这样做, 因为如果模块名碰巧和类名一致, 会让人困扰
 
 **Recommended**
+|**Type**|**Public**|**Internal**|
+|-----|-----|-----|
+|Modules|lower_with_under|\_lower\_with\_under|
+|Packages|lower_with_under||
+|Classes|CapWords|\_CapWords|
+|Exceptions|CapWords||
+|Functions|lower_with_under()|\_lower_with_under|
+|Global/Class Constants|CAPS_WITH_UNDER|\_CAPS_WITH_UNDER|
+|Global/Class Variables|lower_with_under|\_lower_with_under|
+|Instance Variables|lower_with_under|\_lower_with_under(protected)or\_\_lower_with_under(private)|
+|Method Names|lower_with_under()|\_lower_with_under(protected)or\_\_lower_with_under(private)|
+|Function/Method Parameters|lower_with_under||
+|Local Variables|lower_with_under||
 
+**Not Recommended**
+* 避免单字符名称，除了计数器和迭代器
+* 避免包/模块名中的连字符(-)
+* 避免双下划线开头并结尾的名称(Python保留，例如\_\_init\_\_)
 
 ## 注释规范
 
