@@ -271,11 +271,14 @@ No:  if len(users) == 0:
   ```
 
 ### 换行
-除了长的导入模块语句or注释里的URL，每行不超过80个字符。
+除了长的导入模块语句or注释里的URL，每行不超过80个字符。换行时如需要，使用4个空格来缩进代码，绝对不要使用tab，也不要tab和空格混用。
+
+* 顶级定义之间空两行，比如函数或者类定义
+* 方法定义、类定义与第一个方法之间，应空一行；函数或方法中，某些地方觉得合适可空一行
 * 不要使用反斜杠连接行，Python会将圆括号，中括号和花括号中的行隐式的连接起来。如需要，可在表达式外围增加一对额外的圆括号
   ```python
   Yes: foo_bar(self, width, height, color='black', design=None, x='foo',
-             emphasis=None, highlight=0)
+               emphasis=None, highlight=0)
 
        if (width == 0 and height == 0 and
            color == 'red' and emphasis == 'strong'):
@@ -290,11 +293,56 @@ No:  if len(users) == 0:
  Yes:  # See details at
        # http://www.example.com/us/developer/documentation/api/content/v2.0/csv_file_name_extension_full_specification.html
   ```
+* 行连接的情况，应垂直对齐换行的元素，或者使用4空格的悬挂式缩进(这时第一行不应该有参数)
+  ```python
+  Yes:   # Aligned with opening delimiter
+         foo = long_function_name(var_one, var_two,
+                                  var_three, var_four)
+
+         # Aligned with opening delimiter in a dictionary
+         foo = {
+             long_dictionary_key: value1 +
+                                  value2,
+             ...
+         }
+
+         # 4-space hanging indent; nothing on first line
+         foo = long_function_name(
+             var_one, var_two, var_three,
+             var_four)
+
+         # 4-space hanging indent in a dictionary
+         foo = {
+             long_dictionary_key:
+                 long_dictionary_value,
+             ...
+         }
+  ```
+
+**Not Recommended**
 * 注释中，URL不建议换行，应放在一行上
   ```python
   Yes:  # See details at
-        # http://www.example.com/us/developer/documentation/api/content/\\
-       v2.0/csv_file_name_extension_full_specification.html
+        # http://www.example.com/us/developer/documentation/api/content/\
+        # v2.0/csv_file_name_extension_full_specification.html
+  ```
+* 行连接的情况，换行时禁止不采用缩进、采用2空格缩进或在字典中进行不恰当缩进
+  ```python
+  No: # Stuff on first line forbidden
+      foo = long_function_name(var_one, var_two,
+         var_three, var_four)
+
+      # 2-space hanging indent forbidden
+      foo = long_function_name(
+        var_one, var_two, var_three,
+        var_four)
+
+      # No hanging indent in a dictionary
+      foo = {
+          long_dictionary_key:
+              long_dictionary_value,
+              ...
+      }
   ```
 
 ### 命名
