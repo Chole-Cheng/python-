@@ -273,6 +273,8 @@ No:  if len(users) == 0:
 ### 换行
 除了长的导入模块语句or注释里的URL，每行不超过80个字符。换行时如需要，使用4个空格来缩进代码，绝对不要使用tab，也不要tab和空格混用。
 
+**Recommended** 
+
 * 顶级定义之间空两行，比如函数或者类定义
 * 方法定义、类定义与第一个方法之间，应空一行；函数或方法中，某些地方觉得合适可空一行
 * 不要使用反斜杠连接行，Python会将圆括号，中括号和花括号中的行隐式的连接起来。如需要，可在表达式外围增加一对额外的圆括号
@@ -346,7 +348,9 @@ No:  if len(users) == 0:
   ```
 
 ### 命名
+
 **命名约定**
+
 1. 内部(Internal)表示仅模块内可用, 或者在类内是保护或私有的
 2. 用单下划线(\_)开头表示模块变量或函数是protected的(使用from module import \* 时不会包含)
 3. 用双下划线(\_\_)开头的实例变量或方法表示类内私有
@@ -354,6 +358,7 @@ No:  if len(users) == 0:
 5. 对类名使用大写字母开头的单词(如CapWords)，模块名使用小写加下划线的方式(如lower_with_under.py)；有很多现存的模块使用类似于CapWords.py这样的命名, 但现在已经不鼓励这样做, 因为如果模块名碰巧和类名一致, 会让人困扰
 
 **Recommended**
+
 |**Type**|**Public**|**Internal**|
 |-----|-----|-----|
 |Modules|lower_with_under|\_lower\_with\_under|
@@ -369,19 +374,174 @@ No:  if len(users) == 0:
 |Local Variables|lower_with_under||
 
 **Not Recommended**
+
 * 避免单字符名称，除了计数器和迭代器
 * 避免包/模块名中的连字符(-)
 * 避免双下划线开头并结尾的名称(Python保留，例如\_\_init\_\_)
 
 ## 注释规范
 
+确保对模块，函数，方法和行内注释使用正确的风格。
+
 ### 块注释
+
+可以使用以“#”注释的多个单行注释，也可以使用3个单引号开头和结尾一次性注释多行内容，注释应在操作开始前。
+
+```python
+ '''
+ We use a weighted dictionary search to find out where i is in 
+   the array.  We extrapolate position based on the largest num 
+   in the array and the array size and then do binary search to 
+   get the exact number.
+ ...
+ '''
+ 
+ if i & (i-1) == 0:
+```
+
+```python
+# We use a weighted dictionary search to find out where i is in
+# the array.  We extrapolate position based on the largest num
+# in the array and the array size and then do binary search to
+# get the exact number.
+
+if i & (i-1) == 0:
+```
+
 
 ### 行注释
 
+单行注释使用“#”作为注释符号，从符号开始处，直到换行结束，此部分为注释内容。放置位置可以是要注释代码的前一行，也可是代码的行尾。
+
+**Recommended**
+
+* 最需要写注释的是代码中技巧性的部分。对于复杂的操作, 应该在其操作开始前写上若干行注释；对于不是一目了然的代码, 应在其行尾添加注释
+* 行尾注释，注释应至少离开代码2个空格以提高可读性
+```python
+# We use a weighted dictionary search to find out where i is in
+# the array.  We extrapolate position based on the largest num
+# in the array and the array size and then do binary search to
+# get the exact number.
+
+if i & (i-1) == 0:        # True if i is 0 or a power of 2.
+```
+
+**Not Recommended**
+
+* 绝对不要描述代码，应假设阅读代码的人比你更懂Python，只是不知道你的代码要做什么
+  ```python
+  No：
+  # BAD COMMENT: Now go through the b array and make sure whenever i occurs
+  # the next element is i+1
+  ```
+
 ### docstrings
 
+文档字符串为多行注释，常用来为python文件、模块、类或函数等添加版权、功能描述等信息，是包、模块、类或函数里的第一个语句，这些字符串可以通过对象的\_\_doc\_\_成员被自动提取, 并且被pydoc所用。
+
+**Recommended**
+
+**文档字符串格式：文档字符串的惯例是使用三重双引号"""( PEP-257 )； 首行是以句号、问号或惊叹号结尾的概述(或该文档字符串单纯只有一行)；接着是一个空行；然后是文档字符串剩下的部分，它应该与文档字符串的第一行的第一个引号对齐。**
+
+#### 模块注释
+
+* 每个文件应该包含一个许可样板。根据项目使用的许可(例如：Apache 2.0，BSD，LGPL，GPL)，选择合适的样板。
+
+#### 函数和方法注释
+
+下文所指的函数，包括函数、方法以及生成器。
+
+* 一个函数必须要有文档字符串, 除非它满足以下条件:
+  * 外部不可见
+  * 非常短小
+  * 简单明了
+
+* 文档字符串应该包含函数做什么，输入和输出的详细描述。
+  通常，不应该描述“怎么做”，除非是一些复杂的算法。文档字符串应该提供足够的信息，当别人编写代码调用该函数时，不需要看一行代码, 只要看文档字符串就可以了；然而对于复杂的代码，在代码旁边加注释会比使用文档字符串更有意义。
+
+* 关于函数的几个方面应该在特定的小节中进行描述记录；每节应该以一个标题行开始，标题行以冒号结尾；除标题行外，节的其他内容应被缩进2个空格。
+
+**Args:**
+
+列出每个参数的名字，并在名字后使用一个冒号和一个空格，分隔对该参数的描述。如果描述太长超过了单行80字符,使用2或者4个空格的悬挂缩进(与文件其他部分保持一致)。描述应该包括所需的类型和含义。如果一个函数接受\*foo(可变长度参数列表)或者\*\*bar(任意关键字参数)，应该详细列出\*foo和\*\*bar。
+
+**Returns：(或Yields：用于生成器)**
+
+描述返回值的类型和语义。如果函数返回None，这一部分可以省略。
+
+**Raises:**
+列出与接口有关的所有异常。
+
+```python
+def fetch_bigtable_rows(big_table, keys, other_silly_variable=None):
+    """Fetches rows from a Bigtable.
+
+    Retrieves rows pertaining to the given keys from the Table instance
+    represented by big_table.  Silly things may happen if
+    other_silly_variable is not None.
+
+    Args:
+        big_table: An open Bigtable Table instance.
+        keys: A sequence of strings representing the key of each table row
+            to fetch.
+        other_silly_variable: Another optional variable, that has a much
+            longer name than the other args, and which does nothing.
+
+    Returns:
+        A dict mapping keys to the corresponding table row data
+        fetched. Each row is represented as a tuple of strings. For
+        example:
+
+        {'Serak': ('Rigel VII', 'Preparer'),
+         'Zim': ('Irk', 'Invader'),
+         'Lrrr': ('Omicron Persei 8', 'Emperor')}
+
+        If a key from the keys argument is missing from the dictionary,
+        then that row was not found in the table.
+
+    Raises:
+        IOError: An error occurred accessing the bigtable.Table object.
+    """
+    pass
+```
+
+#### 类注释
+
+* 类应该在其定义下有一个用于描述该类的文档字符串。如果类有公共属性(Attributes)，那么文档中应该有一个属性(Attributes)段并且遵守和函数参数相同的格式。
+```python
+class SampleClass(object):
+    """Summary of class here.
+
+    Longer class information....
+    Longer class information....
+
+    Attributes:
+        likes_spam: A boolean indicating if we like SPAM or not.
+        eggs: An integer count of the eggs we have laid.
+    """
+
+    def __init__(self, likes_spam=False):
+        """Inits SampleClass with blah."""
+        self.likes_spam = likes_spam
+        self.eggs = 0
+
+    def public_method(self):
+        """Performs operation blah."""
+```
+
 ### TODO
+
+为临时代码使用TODO注释，一种短期解决方案。统一的格式使添加注释的人就可以搜索到并可以按需提供更多细节，写了TODO注释并不保证写的人会亲自解决问题，当你写TODO时，需要注上你的名字。
+
+**Recommended**
+
+* TODO统一的格式：TODO注释应该在所有开头处包含“TODO”字符串，紧跟着是用括号括起来的你的名字，email地址或其它标识符；然后是一个可选的冒号，接着必须有一行注释，解释要做什么。
+  ```python
+  # TODO(kl@gmail.com): Use a "*" here for string repetition.
+  # TODO(Zeke) Change this to use relations.
+  ```
+* 如果TODO是“将来做某事”的形式，需确保包含了一个指定的日期(“2009年11月解决”)或者一个特定的事件(“等到所有的客户都可以处理XML请求就移除这些代码”)
+
 
 ## 编程建议
 
