@@ -278,6 +278,7 @@ No:  if len(users) == 0:
 * 顶级定义之间空两行，比如函数或者类定义
 * 方法定义、类定义与第一个方法之间，应空一行；函数或方法中，某些地方觉得合适可空一行
 * 不要使用反斜杠连接行，Python会将圆括号，中括号和花括号中的行隐式的连接起来。如需要，可在表达式外围增加一对额外的圆括号
+
   ```python
   Yes: foo_bar(self, width, height, color='black', design=None, x='foo',
                emphasis=None, highlight=0)
@@ -285,17 +286,23 @@ No:  if len(users) == 0:
        if (width == 0 and height == 0 and
            color == 'red' and emphasis == 'strong'):
   ```
+  
 * 如果一个文本字符串在一行放不下, 可以使用圆括号来实现隐式行连接
+
   ```python
   Yes: x = ('This will build a very long long '
             'long long long long long long string')
   ```
+  
 * 注释中，将长的URL放在一行上
+
  ```python
  Yes:  # See details at
        # http://www.example.com/us/developer/documentation/api/content/v2.0/csv_file_name_extension_full_specification.html
   ```
+  
 * 行连接的情况，应垂直对齐换行的元素，或者使用4空格的悬挂式缩进(这时第一行不应该有参数)
+
   ```python
   Yes:   # Aligned with opening delimiter
          foo = long_function_name(var_one, var_two,
@@ -323,12 +330,15 @@ No:  if len(users) == 0:
 
 **Not Recommended**
 * 注释中，URL不建议换行，应放在一行上
+
   ```python
   Yes:  # See details at
         # http://www.example.com/us/developer/documentation/api/content/\
         # v2.0/csv_file_name_extension_full_specification.html
   ```
+  
 * 行连接的情况，换行时禁止不采用缩进、采用2空格缩进或在字典中进行不恰当缩进
+
   ```python
   No: # Stuff on first line forbidden
       foo = long_function_name(var_one, var_two,
@@ -417,6 +427,7 @@ if i & (i-1) == 0:
 
 * 最需要写注释的是代码中技巧性的部分。对于复杂的操作, 应该在其操作开始前写上若干行注释；对于不是一目了然的代码, 应在其行尾添加注释
 * 行尾注释，注释应至少离开代码2个空格以提高可读性
+
 ```python
 # We use a weighted dictionary search to find out where i is in
 # the array.  We extrapolate position based on the largest num
@@ -429,6 +440,7 @@ if i & (i-1) == 0:        # True if i is 0 or a power of 2.
 **Not Recommended**
 
 * 绝对不要描述代码，应假设阅读代码的人比你更懂Python，只是不知道你的代码要做什么
+
   ```python
   No：
   # BAD COMMENT: Now go through the b array and make sure whenever i occurs
@@ -461,16 +473,16 @@ if i & (i-1) == 0:        # True if i is 0 or a power of 2.
 
 * 关于函数的几个方面应该在特定的小节中进行描述记录；每节应该以一个标题行开始，标题行以冒号结尾；除标题行外，节的其他内容应被缩进2个空格。
 
-**Args:**
+  **Args:**
 
-列出每个参数的名字，并在名字后使用一个冒号和一个空格，分隔对该参数的描述。如果描述太长超过了单行80字符,使用2或者4个空格的悬挂缩进(与文件其他部分保持一致)。描述应该包括所需的类型和含义。如果一个函数接受\*foo(可变长度参数列表)或者\*\*bar(任意关键字参数)，应该详细列出\*foo和\*\*bar。
+  列出每个参数的名字，并在名字后使用一个冒号和一个空格，分隔对该参数的描述。如果描述太长超过了单行80字符,使用2或者4个空格的悬挂缩进(与文件其他部分保持一致)。描述应该包括所需的类型和含义。如果一  个函数接受\*foo(可变长度参数列表)或者\*\*bar(任意关键字参数)，应该详细列出\*foo和\*\*bar。
 
-**Returns：(或Yields：用于生成器)**
+  **Returns：**(或Yields：用于生成器)
 
-描述返回值的类型和语义。如果函数返回None，这一部分可以省略。
+  描述返回值的类型和语义。如果函数返回None，这一部分可以省略。
 
-**Raises:**
-列出与接口有关的所有异常。
+  **Raises:**
+  列出与接口有关的所有异常。
 
 ```python
 def fetch_bigtable_rows(big_table, keys, other_silly_variable=None):
@@ -508,6 +520,7 @@ def fetch_bigtable_rows(big_table, keys, other_silly_variable=None):
 #### 类注释
 
 * 类应该在其定义下有一个用于描述该类的文档字符串。如果类有公共属性(Attributes)，那么文档中应该有一个属性(Attributes)段并且遵守和函数参数相同的格式。
+
 ```python
 class SampleClass(object):
     """Summary of class here.
@@ -536,10 +549,12 @@ class SampleClass(object):
 **Recommended**
 
 * TODO统一的格式：TODO注释应该在所有开头处包含“TODO”字符串，紧跟着是用括号括起来的你的名字，email地址或其它标识符；然后是一个可选的冒号，接着必须有一行注释，解释要做什么。
+
   ```python
   # TODO(kl@gmail.com): Use a "*" here for string repetition.
   # TODO(Zeke) Change this to use relations.
   ```
+  
 * 如果TODO是“将来做某事”的形式，需确保包含了一个指定的日期(“2009年11月解决”)或者一个特定的事件(“等到所有的客户都可以处理XML请求就移除这些代码”)
 
 
