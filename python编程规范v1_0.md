@@ -393,7 +393,7 @@ No:  if len(users) == 0:
    the array.  We extrapolate position based on the largest num 
    in the array and the array size and then do binary search to 
    get the exact number.
- ...
+   ...
  '''
  
  if i & (i-1) == 0:
